@@ -1,0 +1,9 @@
+FLUXO DE REGISTRO DE ENTRADA DE VEÍCULO
+
+1 → Usuario está na tela principal
+2 → Usuario seleciona opção "Entrada de veículo"
+3 → No formulário, o uusrio cadastra a placa e o modelo do veículo
+4 → Usuario pressiona botoa gravar
+5 → Sistema busca no banco de dados a placa digitada
+6 → Se placa for encontrada, o movimento deverá ser registrado com a flag "M" no campo 'tipo'
+7 → Caso contrário, será registrado na tabela de movimento deverá ser registrado com a flag "A" no campo 'tipo
