@@ -9,46 +9,36 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_mensalista_telefone")
-public class MensalistaTelefone {
-
+@Table(name = "tbl_mensalista_endereco")
+public class MensalistaEndereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codMensalistaTelefone;
-	
+	private Long codMensalistaEndereco;
+	@ManyToOne
+	@JoinColumn(name = "cod_endereco")
+	private Endereco endereco;
 	@ManyToOne
 	@JoinColumn(name = "cod_mensalista")
 	private Mensalista mensalista;
-
-	@ManyToOne
-	@JoinColumn(name = "cod_telefone")
-	private Telefone telefone;
-
 	
-	public Long getCodMensalistaTelefone() {
-		return codMensalistaTelefone;
+	public Long getCodMensalistaEndereco() {
+		return codMensalistaEndereco;
 	}
-
-	public void setCodMensalistaTelefone(Long codMensalistaTelefone) {
-		this.codMensalistaTelefone = codMensalistaTelefone;
+	public void setCodMensalistaEndereco(Long codMensalistaEndereco) {
+		this.codMensalistaEndereco = codMensalistaEndereco;
 	}
-
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 	public Mensalista getMensalista() {
 		return mensalista;
 	}
-
 	public void setMensalista(Mensalista mensalista) {
 		this.mensalista = mensalista;
 	}
-
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		this.telefone = telefone;
-	}
-	
 	
 	
 }

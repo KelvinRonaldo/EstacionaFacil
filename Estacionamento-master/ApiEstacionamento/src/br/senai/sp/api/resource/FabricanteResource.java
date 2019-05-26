@@ -29,13 +29,13 @@ public class FabricanteResource {
 	
 	//PEGANDO TODOS OS FABRICANTES
 	@GetMapping
-	public List<Fabricante> getFabricantes(){
+	private List<Fabricante> getFabricantes(){
 		return fabricanteRepository.findAll();
 	}
 	
 	//PEGANDO FABRICANTE
 	@GetMapping("/{id}")
-	public Fabricante visualizarFabricante(@PathVariable Long id) {
+	private Fabricante visualizarFabricante(@PathVariable Long id) {
 		System.out.println("ID DO FABRICANTE: "+id);
 		return fabricanteRepository.findById(id).get();
 //		return null;
@@ -45,13 +45,13 @@ public class FabricanteResource {
 	//CADASTRANDO UM FABRICANTE	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void cadastrarFabricante(@RequestBody Fabricante fabricante) {
+	private void cadastrarFabricante(@RequestBody Fabricante fabricante) {
 		fabricanteRepository.save(fabricante);
 	}
 	
 	//ATUALIZAR FABRICANTE
 	@PutMapping("/{id}")
-	public ResponseEntity<Fabricante> atualizarFabricante(
+	private ResponseEntity<Fabricante> atualizarFabricante(
 			@RequestBody Fabricante fabricante,
 			@PathVariable Long id){
 		
@@ -68,7 +68,7 @@ public class FabricanteResource {
 	//deletando um fabricante
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteContato(@PathVariable Long id) {
+	private void deleteContato(@PathVariable Long id) {
 		fabricanteRepository.deleteById(id);
 	}
 

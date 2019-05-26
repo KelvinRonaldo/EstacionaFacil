@@ -45,6 +45,12 @@ public class MovimentacaoResource {
 		return moveRepository.findByDataHoraSaidaIsNull();
 	}
 	
+
+	@GetMapping("/estacionados/{placa}")
+	private Movimentacao getMovimentacoesporPlaca(@PathVariable String placa){
+		return moveRepository.findByPlaca(placa);
+	}
+	
 	@PostMapping
 	private ResponseEntity<Movimentacao> salvarMovimentacao(
 			@RequestBody Movimentacao movimento,

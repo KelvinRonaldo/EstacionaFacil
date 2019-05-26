@@ -19,10 +19,11 @@ public class Endereco {
 	private String logradouro;
 	private String numero;
 	private String bairro;
+	private String cep;
 
 	@ManyToOne
 	@JoinColumn(name = "cod_cidade")
-	private Long codCidade;
+	private Cidade cidade;
 
 	public Long getCodEndereco() {
 		return codEndereco;
@@ -56,12 +57,20 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public Long getCodCidade() {
-		return codCidade;
+	public Cidade getCidade() {
+		return cidade;
 	}
 
-	public void setCodCidade(Long codCidade) {
-		this.codCidade = codCidade;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+	
+
+	public String getCep() {
+		return cep;
 	}
 
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 }

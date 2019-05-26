@@ -23,6 +23,9 @@ public class Veiculo {
 	@ManyToOne
 	@JoinColumn(name="cod_fabricante")
 	private Fabricante fabricante;
+	@ManyToOne
+	@JoinColumn(name="cod_mensalista")
+	private Mensalista mensalista;
 
 	public Long getCodVeiculo() {
 		return codVeiculo;
@@ -56,4 +59,14 @@ public class Veiculo {
 		this.fabricante = fabricante;
 	}
 
+	public Mensalista getMensalista() {
+		return mensalista;
+	}
+
+	public void setMensalista(Mensalista mensalista) {
+		this.mensalista = mensalista;
+	}
+
+	
+	
 }
