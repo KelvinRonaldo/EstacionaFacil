@@ -25,18 +25,18 @@ import br.senai.sp.api.repository.MensalistaTelefoneRepository;
 public class MensalistaTelefoneResource {
 	
 	@Autowired
-	private MensalistaTelefoneRepository mensalistaTelefonRepository;
+	private MensalistaTelefoneRepository mensalistaTelefoneRepository;
 	
 	//Pegando todos os telefones e mensalistas
 	@GetMapping
 	private List<MensalistaTelefone> getMensalistaTelefone(){
-		return mensalistaTelefonRepository.findAll();
+		return mensalistaTelefoneRepository.findAll();
 	}
 	
 	//Pegando um telefone e mensalista
 	@GetMapping("/{id}")
 	private MensalistaTelefone vizualizartMensalistaTelefone(@PathVariable Long id){
-		return mensalistaTelefonRepository.findById(id).get();
+		return mensalistaTelefoneRepository.findById(id).get();
 	}
 	
 	//cadastrando um relacionamento entre mensalista e telefine
@@ -44,7 +44,7 @@ public class MensalistaTelefoneResource {
 	private ResponseEntity<MensalistaTelefone> relacionarMensalistaTelefone(
 			@RequestBody MensalistaTelefone mensalistaTelefone, HttpServletResponse response){
 
-		MensalistaTelefone mensalistaTelefoneSalvo = mensalistaTelefonRepository
+		MensalistaTelefone mensalistaTelefoneSalvo = mensalistaTelefoneRepository
 				.save(mensalistaTelefone);
 		
 		URI uri = ServletUriComponentsBuilder
@@ -64,7 +64,7 @@ public class MensalistaTelefoneResource {
 	private ResponseEntity<MensalistaTelefone> atualizarRelacionamentoMensalistaTelefone(
 			@RequestBody MensalistaTelefone mensalistaTelefone, @PathVariable Long id){
 		
-		MensalistaTelefone mensalistaTelefoneAtualizado = mensalistaTelefonRepository
+		MensalistaTelefone mensalistaTelefoneAtualizado = mensalistaTelefoneRepository
 				.findById(id).get();
 		
 		BeanUtils.copyProperties(mensalistaTelefone, mensalistaTelefoneAtualizado);

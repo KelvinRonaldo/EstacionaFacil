@@ -144,6 +144,7 @@ INSERT INTO tbl_fabricante values (3, 'MUSTANG');
 INSERT INTO tbl_veiculo values (1, 'ABC1234', 'FUSCA', 1, 1);
 INSERT INTO tbl_veiculo values (2, 'AAD1245', 'GOL', 2);
 
+INSERT INTO tbl_movimentacao 
 
 ALTER TABLE tbl_mensalista_telefone ADD COLUMN cod_mensalista_telefone INT NOT NULL PRIMARY KEY AUTO_INCREMENT FIRST;
 ALTER TABLE tbl_mensalista_endereco ADD COLUMN cod_mensalista_endereco INT NOT NULL PRIMARY KEY AUTO_INCREMENT FIRST;

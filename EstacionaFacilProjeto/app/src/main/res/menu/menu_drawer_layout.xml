@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Movimentações"
+        android:id="@+id/menu_movimentacoes"
+        android:icon="@drawable/ic_movimentos"/>
+
+    <item android:title="Mensalista">
+        <menu>
+            <item
+                android:title="Cadastrar Mensalista"
+                android:id="@+id/cadastrar_mensalista"
+                android:icon="@drawable/ic_mensalista"/>
+            <item
+                android:title="Pagamento"
+                android:id="@+id/pagamento_mensalista"
+                android:icon="@drawable/ic_pag_mensalista"/>
+        </menu>
+    </item>
+    <item android:title="Preços">
+        <menu>
+            <item
+                android:title="Registrar Novos Preços"
+                android:id="@+id/regitrar_precos"
+                android:icon="@drawable/ic_precos"/>
+        </menu>
+    </item>
+</menu>

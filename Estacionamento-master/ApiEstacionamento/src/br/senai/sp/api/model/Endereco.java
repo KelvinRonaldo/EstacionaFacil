@@ -20,10 +20,8 @@ public class Endereco {
 	private String numero;
 	private String bairro;
 	private String cep;
-
-	@ManyToOne
-	@JoinColumn(name = "cod_cidade")
-	private Cidade cidade;
+	private String cidade;
+	private String estado;
 
 	public Long getCodEndereco() {
 		return codEndereco;
@@ -57,15 +55,6 @@ public class Endereco {
 		this.bairro = bairro;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
-	}
-	
-
 	public String getCep() {
 		return cep;
 	}
@@ -73,4 +62,21 @@ public class Endereco {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 }
