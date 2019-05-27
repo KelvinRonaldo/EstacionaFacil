@@ -19,6 +19,7 @@ SELECT * FROM tbl_endereco;
 SELECT * FROM tbl_veiculo;
 SELECT * FROM tbl_cidade;
 SELECT * FROM tbl_estado;
+ALTER TABLE tbl_mensalista DROP COLUMN cod_veiculo;
 
 CREATE TABLE tbl_movimentacao(
 cod_movimento INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

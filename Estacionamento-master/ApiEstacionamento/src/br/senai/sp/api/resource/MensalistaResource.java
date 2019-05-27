@@ -38,9 +38,15 @@ public class MensalistaResource {
 			return mensalistaRepository.findById(id).get();
 	}
 	
+	
+//	@PostMapping
+//	public void salvar(@RequestBody Mensalista m) {
+//		mensalistaRepository.save(m); 
+//	}
+	
 	//CADASTRO DE UM MENSALISTA
 	@PostMapping
-	private ResponseEntity<Mensalista> salvarMensalista(@RequestBody Mensalista mensalista, 
+	public ResponseEntity<Mensalista> salvarMensalista(@RequestBody Mensalista mensalista, 
 			HttpServletResponse response) {
 		
 		Mensalista mensalistaSalvo = mensalistaRepository.save(mensalista);

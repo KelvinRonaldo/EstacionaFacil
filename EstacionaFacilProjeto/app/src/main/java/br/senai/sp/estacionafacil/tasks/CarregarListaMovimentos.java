@@ -41,7 +41,7 @@ public class CarregarListaMovimentos extends AsyncTask {
 
         try {
             //URL url = new URL("http://"+R.string.ip_server+":8080/movimentacoes/estacionados");
-            URL url = new URL("http://192.168.15.8:8080/movimentacoes/estacionados");
+            URL url = new URL("http://10.107.134.8:8080/movimentacoes/estacionados");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             InputStream dadosStream = conexao.getInputStream();
             InputStreamReader leitorStream = new InputStreamReader(dadosStream);

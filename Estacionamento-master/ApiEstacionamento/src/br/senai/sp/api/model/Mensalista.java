@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,7 +18,7 @@ public class Mensalista {
 	private String nome;
 	private String email;
 	private String cpf;
-
+	
 	public Long getCodMensalista() {
 		return codMensalista;
 	}
@@ -48,7 +50,5 @@ public class Mensalista {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
-	
 
 }

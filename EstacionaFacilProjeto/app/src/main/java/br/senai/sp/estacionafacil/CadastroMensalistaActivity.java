@@ -72,6 +72,7 @@ public class CadastroMensalistaActivity extends AppCompatActivity {
                 if(mensalista.getCodMensalista() == 0){
                     GravarMensalista gravarMensalista = new GravarMensalista(mensalista);
                     gravarMensalista.execute();
+                    finish();
                 }
 
 //                telefone.setTelefone(txtTelefoneMensalista.getText().toString());

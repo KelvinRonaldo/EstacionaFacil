@@ -31,7 +31,7 @@ public class GravarMovimento extends AsyncTask {
         try {
             jsonMovimento.criarJsonMovimento(movimento);
 
-            URL url = new URL("http://192.168.15.8:8080/movimentacoes");
+            URL url = new URL("http://10.107.134.8:8080/movimentacoes");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");

@@ -10,41 +10,12 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema db_estaciona_facil
 -- -----------------------------------------------------
-
+DROP DATABASE `db_estaciona_facil`;
 -- -----------------------------------------------------
 -- Schema db_estaciona_facil
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `db_estaciona_facil` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `db_estaciona_facil` ;
-
--- -----------------------------------------------------
--- Table `db_estaciona_facil`.`tbl_estado`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_estaciona_facil`.`tbl_estado` (
-  `cod_estado` INT(11) NOT NULL AUTO_INCREMENT,
-  `estado` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`cod_estado`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `db_estaciona_facil`.`tbl_cidade`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_estaciona_facil`.`tbl_cidade` (
-  `cod_cidade` INT(11) NOT NULL AUTO_INCREMENT,
-  `cidade` VARCHAR(100) NOT NULL,
-  `cod_estado` INT(11) NOT NULL,
-  PRIMARY KEY (`cod_cidade`),
-  INDEX `fk_cidade_estado` (`cod_estado` ASC),
-  CONSTRAINT `fk_cidade_estado`
-    FOREIGN KEY (`cod_estado`)
-    REFERENCES `db_estaciona_facil`.`tbl_estado` (`cod_estado`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
 
 -- -----------------------------------------------------
 -- Table `db_estaciona_facil`.`tbl_endereco`
@@ -56,10 +27,8 @@ CREATE TABLE IF NOT EXISTS `db_estaciona_facil`.`tbl_endereco` (
   `bairro` VARCHAR(60) NOT NULL,
   `cod_cidade` INT(11) NOT NULL,
   PRIMARY KEY (`cod_endereco`),
-  INDEX `fk_endereco_cidade` (`cod_cidade` ASC),
-  CONSTRAINT `fk_endereco_cidade`
-    FOREIGN KEY (`cod_cidade`)
-    REFERENCES `db_estaciona_facil`.`tbl_cidade` (`cod_cidade`))
+  `cidade`VARCHAR(100) NOT NULL,
+  `estado` VARCHAR(100) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

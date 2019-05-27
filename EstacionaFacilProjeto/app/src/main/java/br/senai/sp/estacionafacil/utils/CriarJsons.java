@@ -1,7 +1,11 @@
 package br.senai.sp.estacionafacil.utils;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONStringer;
+
+import java.security.acl.LastOwnerException;
 
 import br.senai.sp.estacionafacil.modelo.Endereco;
 import br.senai.sp.estacionafacil.modelo.Mensalista;
@@ -33,9 +37,13 @@ public class CriarJsons {
 
         try {
             jsonMensalista.object();
-            jsonMensalista.key("nome").value(mensalista.getNome());
-            jsonMensalista.key("email").value(mensalista.getEmail());
-            jsonMensalista.key("cpf").value(mensalista.getCpf());
+            jsonMensalista.key("nome").value(mensalista.getNome().toString());
+            jsonMensalista.key("email").value(mensalista.getEmail().toString());
+            jsonMensalista.key("cpf").value(mensalista.getCpf().toString());
+            jsonMensalista.endObject();
+
+            Log.d("MENSALISTA", jsonMensalista.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -52,6 +60,7 @@ public class CriarJsons {
             jsonEndereco.key("cep").value(endereco.getCep());
             jsonEndereco.key("cidade").value(endereco.getCidade());
             jsonEndereco.key("estado").value(endereco.getEstado());
+            jsonEndereco.endObject();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -65,6 +74,7 @@ public class CriarJsons {
             jsonMensalistaTelefone.object();
             jsonMensalistaTelefone.key("codMensalista").value(codMensalita);
             jsonMensalistaTelefone.key("codTelefone").value(codTelefone);
+            jsonMensalistaTelefone.endObject();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -77,6 +87,7 @@ public class CriarJsons {
         try {
             jsonTelefone.object();
             jsonTelefone.key("telefone").value(telefone.getTelefone());
+            jsonTelefone.endObject();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,6 +101,7 @@ public class CriarJsons {
             jsonMensalistEndereco.object();
             jsonMensalistEndereco.key("codMensalista").value(codMensalita);
             jsonMensalistEndereco.key("codEndereco").value(codEndereco);
+            jsonMensalistEndereco.endObject();
         } catch (JSONException e) {
             e.printStackTrace();
         }

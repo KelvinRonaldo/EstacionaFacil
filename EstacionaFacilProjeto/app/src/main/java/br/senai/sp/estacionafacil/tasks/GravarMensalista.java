@@ -1,6 +1,9 @@
 package br.senai.sp.estacionafacil.tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -26,21 +29,22 @@ public class GravarMensalista extends AsyncTask {
 
         CriarJsons jsonMensalista = new CriarJsons();
 
-        jsonMensalista.criarJsonMensalista(mensalista);
+        JSONStringer jsonStringerMensalista = jsonMensalista.criarJsonMensalista(mensalista);
 
         try {
-            URL url = new URL("http://192.168.15.8:8080/mensalista");
+            URL url = new URL("http://10.107.134.8:8080/mensalista");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestMethod("POST");
             conexao.setDoInput(true);
             PrintStream output = new PrintStream(conexao.getOutputStream());
-            output.print(jsonMensalista);
+            output.print(jsonStringerMensalista);
             conexao.connect();
             Scanner scanner = new Scanner(conexao.getInputStream());
             String resposta = scanner.nextLine();
 
+            Log.d("Resposta", resposta);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

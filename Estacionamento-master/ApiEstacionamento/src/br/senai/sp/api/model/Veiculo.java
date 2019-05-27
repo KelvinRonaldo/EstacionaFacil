@@ -12,19 +12,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tbl_veiculo")
 public class Veiculo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cod_veiculo")//← opcional
+	@Column(name = "cod_veiculo") // ← opcional
 	private Long codVeiculo;
-	
+
 	private String placa;
 	private String modeloCarro;
 	@ManyToOne
-	@JoinColumn(name="cod_fabricante")
+	@JoinColumn(name = "cod_fabricante")
 	private Fabricante fabricante;
+
 	@ManyToOne
-	@JoinColumn(name="cod_mensalista")
+	@JoinColumn(name = "cod_mensalista")
 	private Mensalista mensalista;
 
 	public Long getCodVeiculo() {
@@ -67,6 +68,4 @@ public class Veiculo {
 		this.mensalista = mensalista;
 	}
 
-	
-	
 }

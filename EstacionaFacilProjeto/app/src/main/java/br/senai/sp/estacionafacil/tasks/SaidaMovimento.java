@@ -36,7 +36,7 @@ public class SaidaMovimento extends AsyncTask {
 
 
         try {
-            URL url = new URL("http://192.168.15.8:8080/movimentacoes/saida/"+movimento.getCodMovimento());
+            URL url = new URL("http://10.107.134.8:8080/movimentacoes/saida/"+movimento.getCodMovimento());
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
             InputStream dadosStream = conexao.getInputStream();
