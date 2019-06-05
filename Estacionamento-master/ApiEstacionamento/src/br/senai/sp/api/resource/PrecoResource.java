@@ -1,5 +1,6 @@
 package br.senai.sp.api.resource;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.senai.sp.api.model.Preco;
 import br.senai.sp.api.repository.PrecoRepository;
@@ -37,17 +39,31 @@ public class PrecoResource {
 		return precoRepository.findByDataFimIsNull();
 	}
 
-//	@PostMapping
-//	private ResponseEntity<Preco> cadastrarPreco(@RequestBody Preco preco,
-//			HttpServletResponse response){
-//		Preco precoSalvo =  
-//		
-//		return null;
-//	}
+	@PostMapping
+	private ResponseEntity<Preco> cadastrarPreco(@RequestBody Preco preco,
+			HttpServletResponse response){
+		
+		Preco precoVigente = precoRepository.findByDataFimIsNull();
+		
+		if(precoVigente != null) {
+			finalizarPreco(precoVigente, precoVigente.getCodPreco());
+		}
+		
+		Preco precoSalvo = precoRepository.save(preco);
+		
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequestUri()
+				.path("/{id}")
+				.buildAndExpand(preco.getCodPreco())
+				.toUri();
+		
+		response.addHeader("Location", uri.toASCIIString());
+		
+		return ResponseEntity.created(uri).body(precoSalvo);
+	}
 
-	@PutMapping("/fimPreco/{id}")
-	private ResponseEntity<Preco> finalizarPreco(@RequestBody Preco preco,
-			@PathVariable Long id){
+//	@PutMapping("/fimPreco/{id}")
+	private ResponseEntity<Preco> finalizarPreco(Preco preco, Long id){
 		
 		Preco precoFim = precoRepository.findById(id).get();
 		
@@ -59,7 +75,7 @@ public class PrecoResource {
 		BeanUtils.copyProperties(preco, precoFim, "id");
 		preco.setDataFim(precoFim.getDataFim());
 		
-		//precoRepository.save(preco);
+		precoRepository.save(preco);
 		
 		System.out.println(precoFim.getDataFim() + " -----  data fim");
 		return null;

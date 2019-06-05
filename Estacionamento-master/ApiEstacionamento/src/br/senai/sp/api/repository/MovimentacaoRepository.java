@@ -12,6 +12,4 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long
 	@Query("select m from Movimentacao m where m.dataHoraSaida is Null")
 	List<Movimentacao> findByDataHoraSaidaIsNull();
 	
-	@Query("select mp from Movimentacao mp where mp.placa = ?1")
-	Movimentacao findByPlaca(String placa);
 }

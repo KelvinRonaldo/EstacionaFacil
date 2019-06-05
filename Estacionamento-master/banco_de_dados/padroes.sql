@@ -4,11 +4,8 @@ DESC tbl_fabricante;
 DESC tbl_veiculo;
 DESC tbl_mensalista;
 DESC tbl_mensalista_endereco;
-DESC tbl_cidade;
-DESC tbl_estado;
 DESC tbl_endereco;
 DESC tbl_mensalista_telefone;
-DESC tbl_mensalista_veiculo;
 
 SELECT * FROM tbl_movimentacao;
 SELECT * FROM tbl_preco;
@@ -16,10 +13,13 @@ SELECT * FROM tbl_fabricante;
 SELECT * FROM tbl_mensalista;
 SELECT * FROM tbl_mensalista_endereco;
 SELECT * FROM tbl_endereco;
+SELECT * FROM tbl_telefone;
+SELECT * FROM tbl_mensalista_telefone;
 SELECT * FROM tbl_veiculo;
 SELECT * FROM tbl_cidade;
 SELECT * FROM tbl_estado;
-ALTER TABLE tbl_mensalista DROP COLUMN cod_veiculo;
+
+ALTER TABLE tbl_preco CHANGE COLUMN preco_mensal valor_mensal DECIMAL(5, 2) NOT NULL AFTER valor_demais_horas;
 
 CREATE TABLE tbl_movimentacao(
 cod_movimento INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -119,18 +119,17 @@ DELETE FROM tbl_movimentacao WHERE cod_movimento = 1;
 
 
 
-INSERT INTO tbl_preco (valor_primeira_hora, valor_demais_horas, tempo_tolerancia)
-VALUES (5, 3, 5);
+INSERT INTO tbl_preco (valor_primeira_hora, valor_demais_horas, preco_mensal, tempo_tolerancia) VALUES (5, 3, 150, 5);
 
 INSERT INTO tbl_movimentacao (placa, modelo_carro, data_hora_entrada, tipo)
-VALUES ('JGN-7852', 'Crossfox', now(), 'A');
+VALUES ('JGN-7852', 'Crossfox', '2019-05-30 15:49:26', 'Avulso');
 
 -- endereco
 INSERT INTO tbl_estado value (1, 'SÃO PAULO');
 
 INSERT INTO tbl_cidade values (1, 'JANDIRA', 1);
 
-INSERT INTO tbl_endereco values (1, 'Rua Antonio gomes dos santos', '03', 'Parque dos logos', '06622345', 1);
+INSERT INTO tbl_endereco values (1, 'Rua Antonio gomes dos santos', '03', 'Parque dos logos', '06542589','Jandira', 'São Paulo');
 
 -- tirei os codigos de telefone e endereço pois uma tabela ja está fazendo isso
 INSERT INTO tbl_mensalista values (1, 'David Silva Souza', 'david@terra.com', '435-423-668/03');
@@ -145,7 +144,7 @@ INSERT INTO tbl_fabricante values (3, 'MUSTANG');
 INSERT INTO tbl_veiculo values (1, 'ABC1234', 'FUSCA', 1, 1);
 INSERT INTO tbl_veiculo values (2, 'AAD1245', 'GOL', 2);
 
-INSERT INTO tbl_movimentacao 
+
 
 ALTER TABLE tbl_mensalista_telefone ADD COLUMN cod_mensalista_telefone INT NOT NULL PRIMARY KEY AUTO_INCREMENT FIRST;
 ALTER TABLE tbl_mensalista_endereco ADD COLUMN cod_mensalista_endereco INT NOT NULL PRIMARY KEY AUTO_INCREMENT FIRST;

@@ -21,7 +21,7 @@ public class Movimentacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codMovimento;
 	@NotNull
-	@Size(min = 8, max = 8)
+	@Size(min = 7, max = 8)
 	private String placa;
 	@NotNull
 	@Size(min = 1, max = 15)
