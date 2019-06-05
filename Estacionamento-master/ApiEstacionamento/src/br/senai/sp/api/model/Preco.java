@@ -17,6 +17,7 @@ public class Preco {
 	private Long codPreco;
 	private Double valorPrimeiraHora;
 	private Double valorDemaisHoras;
+	private Double valorMensal;
 	private Integer tempoTolerancia;
 	private String dataFim;
 
@@ -44,6 +45,14 @@ public class Preco {
 		this.valorDemaisHoras = valorDemaisHoras;
 	}
 
+	public Double getValorMensal() {
+		return valorMensal;
+	}
+
+	public void setValorMensal(Double valorMensal) {
+		this.valorMensal = valorMensal;
+	}
+
 	public Integer getTempoTolerancia() {
 		return tempoTolerancia;
 	}
@@ -62,8 +71,8 @@ public class Preco {
 
 	@Override
 	public String toString() {
-		return "Preco [codPreco=" + codPreco + ", valorHora1=" + valorPrimeiraHora + ", valorDemaisHoras=" + valorDemaisHoras
-				+ ", tempoTolerancia=" + tempoTolerancia + ", dataFim=" + dataFim + "]";
+		return "Preco [codPreco=" + codPreco + ", valorHora1=" + valorPrimeiraHora + ", valorDemaisHoras="
+				+ valorDemaisHoras + ", tempoTolerancia=" + tempoTolerancia + ", dataFim=" + dataFim + "]";
 	}
 
 }

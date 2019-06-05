@@ -46,11 +46,6 @@ public class MovimentacaoResource {
 	}
 	
 
-	@GetMapping("/estacionados/{placa}")
-	private Movimentacao getMovimentacoesporPlaca(@PathVariable String placa){
-		return moveRepository.findByPlaca(placa);
-	}
-	
 	@PostMapping
 	private ResponseEntity<Movimentacao> salvarMovimentacao(
 			@RequestBody Movimentacao movimento,
@@ -70,6 +65,31 @@ public class MovimentacaoResource {
 		response.addHeader("Location", uri.toASCIIString());
 		
 		return ResponseEntity.created(uri).body(movimentoSalvo);
+	}
+	
+	@GetMapping("/saida/mensalista/{id}")
+	private Movimentacao saidaMovimentoMensalista(@PathVariable Long id, @RequestBody Movimentacao movimento) {
+
+		movimento = moveRepository.findById(id).get();	
+		
+		ConverterDates date = new ConverterDates();
+		
+		String dataAtual = date.dataAtualString();
+		movimento.setDataHoraSaida(dataAtual);
+
+		String dataSaidaFormatada = movimento.getDataHoraSaida();
+		String dataEntradaFormatada = movimento.getDataHoraEntrada();
+		
+		Date dateSaida = date.stringToDate(dataSaidaFormatada);
+		Date dateEntrada = date.stringToDate(dataEntradaFormatada);
+		
+		Long tempoMillis = dateSaida.getTime() - dateEntrada.getTime();
+		Integer tempoMinutos = (int) ((tempoMillis/1000)/60);
+		Integer tempoHoras = (int) (tempoMinutos/60);
+
+		movimento.setTempoPermanencia(tempoMinutos);
+		
+		return moveRepository.findById(id).get();
 	}
 	
 	@GetMapping("/saida/{id}")
@@ -101,7 +121,6 @@ public class MovimentacaoResource {
 		movimento.setTempoPermanencia(tempoMinutos);
 		movimento.setValorPago(valorAPagar);
 		
-		System.out.println("VALOR "+valorAPagar);
 		
 		return moveRepository.findById(id).get();
 	}

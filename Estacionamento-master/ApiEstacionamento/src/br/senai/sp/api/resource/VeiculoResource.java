@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.senai.sp.api.model.Movimentacao;
 import br.senai.sp.api.model.Veiculo;
 import br.senai.sp.api.repository.VeiculoRepository;
 
@@ -40,6 +41,12 @@ public class VeiculoResource {
 	public Veiculo visualizarVeiculo(@PathVariable Long id) {
 		return veiculoRepository.findById(id).get();
 	}
+	
+	@GetMapping("/cadastrado/{placa}")
+	private Veiculo getVeiculoPlaca(@PathVariable String placa){
+		return veiculoRepository.findByPlaca(placa);
+	}
+	
 	
 	//cadastrando um veiculo
 	@PostMapping
