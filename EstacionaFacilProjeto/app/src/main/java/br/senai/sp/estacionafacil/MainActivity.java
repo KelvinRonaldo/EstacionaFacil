@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    public static String ipServidor = "10.107.144.27";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,20 +53,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()){
             case R.id.menu_movimentacoes:
-                Toast.makeText(this, "MOVIMENTAÇÕES", Toast.LENGTH_SHORT).show();
                 Intent movimentos = new Intent(MainActivity.this, EstacionadosActivity.class);
                 this.startActivity(movimentos);
                 break;
             case R.id.cadastrar_mensalista:
-                Toast.makeText(this, "CADASTRO MENSALISTA", Toast.LENGTH_SHORT).show();
                 Intent mensalista = new Intent(MainActivity.this, CadastroMensalistaActivity.class);
                 this.startActivity(mensalista);
+                break;
+            case R.id.visualizar_mensalista:
+                Intent viewmensalista = new Intent(MainActivity.this, MensalistasActivity.class);
+                this.startActivity(viewmensalista);
                 break;
             case R.id.pagamento_mensalista:
                 Toast.makeText(this, "PAGAMENTO MENSALISTA", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.regitrar_precos:
-                Toast.makeText(this, "PRECOS", Toast.LENGTH_SHORT).show();
+                Intent precos = new Intent(MainActivity.this, CadastroPrecosActivity.class);
+                startActivity(precos);
                 break;
             default:
                 Toast.makeText(this, "Nenhum", Toast.LENGTH_SHORT).show();

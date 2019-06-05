@@ -17,6 +17,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 import br.senai.sp.estacionafacil.EstacionadosActivity;
+import br.senai.sp.estacionafacil.MainActivity;
 import br.senai.sp.estacionafacil.VisualizarActivity;
 import br.senai.sp.estacionafacil.modelo.Movimentacao;
 
@@ -36,7 +37,7 @@ public class SaidaMovimento extends AsyncTask {
 
 
         try {
-            URL url = new URL("http://10.107.134.8:8080/movimentacoes/saida/"+movimento.getCodMovimento());
+            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/movimentacoes/saida/"+movimento.getCodMovimento());
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
             InputStream dadosStream = conexao.getInputStream();

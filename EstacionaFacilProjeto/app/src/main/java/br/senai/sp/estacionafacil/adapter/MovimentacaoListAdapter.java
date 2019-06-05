@@ -1,5 +1,6 @@
 package br.senai.sp.estacionafacil.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,11 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.List;
 
+import br.senai.sp.estacionafacil.CadastroMovimentoActivity;
 import br.senai.sp.estacionafacil.EstacionadosActivity;
 import br.senai.sp.estacionafacil.R;
 import br.senai.sp.estacionafacil.modelo.Movimentacao;
+import br.senai.sp.estacionafacil.tasks.AtualizarMovimento;
 import br.senai.sp.estacionafacil.tasks.SaidaMovimento;
 import br.senai.sp.estacionafacil.utils.Datas;
 
@@ -54,12 +57,13 @@ public class MovimentacaoListAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(estacionadosActivity);
         View view =  inflater.inflate(R.layout.lista_entrada, null);
 
-        LinearLayout linearLayout = view.findViewById(R.id.layout_editar);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout layoutEditar = view.findViewById(R.id.layout_editar);
+        layoutEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                Intent  intentAtulizar = new Intent(estacionadosActivity, CadastroMovimentoActivity.class);
+                intentAtulizar.putExtra("movimento", movimentacao);
+                 estacionadosActivity.startActivity(intentAtulizar);
             }
         });
 
@@ -87,10 +91,16 @@ public class MovimentacaoListAdapter extends BaseAdapter {
 
         Datas datas = new Datas();
         Date dataEntrada = datas.stringToDate(movimentacao.getDataHoraEntrada());
-        String stringEntrada = datas.dataToBrString(dataEntrada);
+        String stringDataEntrada = datas.dataToBrString(dataEntrada);
 
-        Toast.makeText(estacionadosActivity, stringEntrada+" <--AQUI", Toast.LENGTH_LONG).show();
-        view_hora_entrada.setText(stringEntrada);
+//        String dataHora = datas.formatarComSubString(movimentacao.getDataHoraEntrada());
+
+        Log.d("HORA", stringDataEntrada);
+
+
+//        Toast.makeText(estacionadosActivity, dataHora+" <--AQUI", Toast.LENGTH_LONG).show();
+        view_hora_entrada.setText(stringDataEntrada);
+//        view_hora_entrada.setText(dataHora);
 
         TextView view_tipo = view.findViewById(R.id.tipo_veiculo_lista);
         view_tipo.setText(movimentacao.getTipo());

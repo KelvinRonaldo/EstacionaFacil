@@ -1,10 +1,14 @@
 package br.senai.sp.estacionafacil;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.concurrent.ExecutionException;
 
 import br.senai.sp.estacionafacil.modelo.Endereco;
 import br.senai.sp.estacionafacil.modelo.Mensalista;
@@ -30,6 +34,7 @@ public class CadastroMensalistaActivity extends AppCompatActivity {
     private Mensalista mensalista;
     private Telefone telefone;
     private Endereco endereco;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +74,24 @@ public class CadastroMensalistaActivity extends AppCompatActivity {
                 mensalista.setEmail(txtEmailMensalista.getText().toString());
                 mensalista.setCpf(txtCpfMensalista.getText().toString());
 
-                if(mensalista.getCodMensalista() == 0){
-                    GravarMensalista gravarMensalista = new GravarMensalista(mensalista);
-                    gravarMensalista.execute();
-                    finish();
-                }
+
+                    try {
+                        if(mensalista.getCodMensalista() == 0){
+                            GravarMensalista gravarMensalista = new GravarMensalista(mensalista);
+                            gravarMensalista.execute();
+
+                            mensalista = (Mensalista) gravarMensalista.get();
+
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    Intent abrirMensalistas = new Intent(CadastroMensalistaActivity.this, MensalistasActivity.class);
+                    startActivity(abrirMensalistas);
 
 //                telefone.setTelefone(txtTelefoneMensalista.getText().toString());
 //
@@ -83,6 +101,7 @@ public class CadastroMensalistaActivity extends AppCompatActivity {
 //                endereco.setCep(txtCepMensalista.getText().toString());
 //                endereco.setCidade(txtCidadeMensalista.getText().toString());
 //                endereco.setEstado(txtEstadoMensalista.getText().toString());
+
             }
         });
 

@@ -30,12 +30,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EstacionadosActivity" />
         </activity>
-        <activity android:name=".CadastroActivity">
+        <activity android:name=".CadastroMovimentoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EstacionadosActivity" />
         </activity>
-        <activity android:name=".CadastroMensalistaActivity"></activity>
+        <activity android:name=".CadastroMensalistaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MensalistasActivity" />
+        </activity>
+        <activity android:name=".MensalistasActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".CadastroPrecosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -40,5 +40,8 @@ public class Mensalista implements Serializable {
         this.cpf = cpf;
     }
 
-
+    @Override
+    public String toString() {
+        return codMensalista + " - " + nome + " - " + email + " - " + cpf;
+    }
 }

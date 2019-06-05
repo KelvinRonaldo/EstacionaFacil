@@ -12,6 +12,10 @@
                 android:id="@+id/cadastrar_mensalista"
                 android:icon="@drawable/ic_mensalista"/>
             <item
+                android:title="Mensalistas"
+                android:id="@+id/visualizar_mensalista"
+                android:icon="@drawable/ic_mensalista"/>
+            <item
                 android:title="Pagamento"
                 android:id="@+id/pagamento_mensalista"
                 android:icon="@drawable/ic_pag_mensalista"/>

@@ -1,7 +1,6 @@
 package br.senai.sp.estacionafacil.tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONStringer;
 
@@ -13,46 +12,43 @@ import java.net.URL;
 import java.util.Scanner;
 
 import br.senai.sp.estacionafacil.MainActivity;
-import br.senai.sp.estacionafacil.modelo.Movimentacao;
+import br.senai.sp.estacionafacil.modelo.Preco;
 import br.senai.sp.estacionafacil.utils.CriarJsons;
 
-public class GravarMovimento extends AsyncTask {
+public class GravarPreco extends AsyncTask{
 
-    private Movimentacao movimento;
+    private Preco preco;
 
-    public GravarMovimento(Movimentacao movimento) {
-        this.movimento = movimento;
+    public GravarPreco(Preco preco) {
+        this.preco = preco;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
 
-        CriarJsons jsonMovimento = new CriarJsons();
-        JSONStringer stringerMovimento;
-        try {
-            stringerMovimento = jsonMovimento.criarJsonSaidaMovimento(movimento, "gravar");
+        CriarJsons jsonPreco = new CriarJsons();
+        JSONStringer stringerPreco;
 
-            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/movimentacoes");
+        stringerPreco = jsonPreco.criarJsonPrecos(preco);
+
+        try {
+            URL url = new URL("http://"+MainActivity.ipServidor+":8080/precos/");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestMethod("POST");
             conexao.setDoInput(true);
             PrintStream output = new PrintStream(conexao.getOutputStream());
-            output.print(stringerMovimento);
+            output.print(stringerPreco);
             conexao.connect();
             Scanner scanner = new Scanner(conexao.getInputStream());
             String resposta = scanner.nextLine();
-
-            Log.d("RESPOSTA", resposta);
-
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

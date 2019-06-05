@@ -1,7 +1,6 @@
 package br.senai.sp.estacionafacil.tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONStringer;
 
@@ -16,36 +15,44 @@ import br.senai.sp.estacionafacil.MainActivity;
 import br.senai.sp.estacionafacil.modelo.Movimentacao;
 import br.senai.sp.estacionafacil.utils.CriarJsons;
 
-public class GravarMovimento extends AsyncTask {
+public class AtualizarParaSaidaMovimento extends AsyncTask {
 
     private Movimentacao movimento;
+    private String resposta = "";
 
-    public GravarMovimento(Movimentacao movimento) {
+    public AtualizarParaSaidaMovimento(Movimentacao movimento) {
         this.movimento = movimento;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
-
         CriarJsons jsonMovimento = new CriarJsons();
-        JSONStringer stringerMovimento;
-        try {
-            stringerMovimento = jsonMovimento.criarJsonSaidaMovimento(movimento, "gravar");
 
-            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/movimentacoes");
+        JSONStringer stringerMovimento;
+
+        try {
+            stringerMovimento = jsonMovimento.criarJsonSaidaMovimento(movimento);
+            URL url;
+
+            if(movimento.getTipo().equals("Mensalista")){
+                url = new URL("http://"+ MainActivity.ipServidor+":8080/movimentacoes/saida/mensalista/"+movimento.getCodMovimento());
+            }else{
+                url = new URL("http://"+ MainActivity.ipServidor+":8080/movimentacoes/saida/"+movimento.getCodMovimento());
+            }
+
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
-            conexao.setRequestMethod("POST");
+            conexao.setRequestMethod("PUT");
             conexao.setDoInput(true);
             PrintStream output = new PrintStream(conexao.getOutputStream());
             output.print(stringerMovimento);
             conexao.connect();
             Scanner scanner = new Scanner(conexao.getInputStream());
-            String resposta = scanner.nextLine();
+            resposta = scanner.nextLine();
 
-            Log.d("RESPOSTA", resposta);
-
+            return null;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
