@@ -9,12 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 
 import br.senai.sp.estacionafacil.modelo.Movimentacao;
-import br.senai.sp.estacionafacil.tasks.AtualizarMovimento;
-import br.senai.sp.estacionafacil.tasks.SaidaMovimento;
+import br.senai.sp.estacionafacil.tasks.AtualizarParaSaidaMovimento;
 import br.senai.sp.estacionafacil.utils.Datas;
 import br.senai.sp.estacionafacil.utils.Decimais;
 
@@ -45,40 +43,58 @@ public class VisualizarActivity extends AppCompatActivity {
         Intent pegarMovimento = getIntent();
         movimento = (Movimentacao) pegarMovimento.getSerializableExtra("movimento");
 
-        if(movimento == null){
-            Toast.makeText(VisualizarActivity.this, "NULO", Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(VisualizarActivity.this, "segundo " + movimento.getPlaca(), Toast.LENGTH_SHORT).show();
-            Log.d("VALOR", movimento.getValorPago().toString());
+        if(movimento != null){
 
-            Datas dataString = new Datas();
-            Datas dataBr = new Datas();
-            Date data;
+            Datas transformData = new Datas();
+            String dataEntrada;
+            String dataSaida;
+            Date dateEntrada;
+            Date dateSaida;
 
-            data = dataString.stringToDate(movimento.getDataHoraEntrada());
-            movimento.setDataHoraEntrada(dataBr.dataToBrString(data));
-            data = dataString.stringToDate(movimento.getDataHoraSaida());
-            movimento.setDataHoraSaida(dataBr.dataToBrString(data));
-//
-//            Integer tempoMinutos = movimento.getTempoPermanecia();
-//            Integer tempoHoras = tempoMinutos60;
-//            Integer tempoDias = tempoMinutos/24;
-//            String permanencia = tempoDias+" dias "+tempoHoras+" horas "+tempoMinutos+" minutos";
 
+            Toast.makeText(this, movimento.getDataHoraEntrada(), Toast.LENGTH_SHORT).show();
+
+            /*PEGANDO STRING EM FORMATO DE DATA DO MOVIMENTO DE TRANSFORMANDO
+            EM UM OBJETO DATE();↓↓↓↓*/
+            dateEntrada = transformData.stringToDate(movimento.getDataHoraEntrada());
+            /*↓↓↓↓PEGANDO DATE GERADO E MUDANDO SEU FORMATO PARA O PADRÃO PT-BR*/
+            dataEntrada = transformData.dataToBrString(dateEntrada);
+
+            dateSaida = transformData.stringToDate(movimento.getDataHoraSaida());
+            dataSaida = transformData.dataToBrString(dateSaida);
+
+            Integer iniMinutos = movimento.getTempoPermanecia();
+            Double minutos = (double) iniMinutos;
+            Double dias = (minutos/60)/24;
+            Double horas = (dias % 1)*24;
+            minutos = (horas % 1)*60;
+
+            String numDias = Math.floor(dias)+" dias";
+            String numHoras = Math.floor(horas)+" horas";
+            String numMinutos = Math.floor(minutos)+" minutos";
+            String permanencia = numDias+" "+numHoras+" "+numMinutos;
 
             txtPlaca.setText(movimento.getPlaca());
             txtModeloCarro.setText(movimento.getModeloCarro());
-            txtDataHoraEntrada.setText(movimento.getDataHoraEntrada());
-            txtDataHoraSaida.setText(movimento.getDataHoraSaida());
-//            txtTempoPermanencia.setText(permanencia);
-            txtValorPago.setText(Decimais.generateDecimal(movimento.getValorPago()));
+            txtDataHoraEntrada.setText(dataEntrada);
+            txtDataHoraSaida.setText(dataSaida);
+            txtTempoPermanencia.setText(permanencia);
+
+            switch (movimento.getTipo().toString()){
+                case "Avulso":
+                    txtValorPago.setText(Decimais.generateDecimal(movimento.getValorPago()));
+                    break;
+                case "Mensalista":
+                    txtValorPago.setText("Mensalista");
+                    break;
+            }
 
             btnSaida.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                AtualizarMovimento atualizarMovimento = new AtualizarMovimento(movimento);
-                atualizarMovimento.execute();
-                finish();
+                    AtualizarParaSaidaMovimento atualizarParaSaidaMovimento = new AtualizarParaSaidaMovimento(movimento);
+                    atualizarParaSaidaMovimento.execute();
+                    finish();
                 }
             });
         }

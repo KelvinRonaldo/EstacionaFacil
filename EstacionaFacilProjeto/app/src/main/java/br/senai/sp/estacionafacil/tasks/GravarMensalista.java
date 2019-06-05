@@ -12,12 +12,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+import br.senai.sp.estacionafacil.MainActivity;
 import br.senai.sp.estacionafacil.modelo.Mensalista;
 import br.senai.sp.estacionafacil.utils.CriarJsons;
 
 public class GravarMensalista extends AsyncTask {
 
     private Mensalista mensalista;
+    public String dados;
 
     public GravarMensalista(Mensalista mensalista) {
         this.mensalista = mensalista;
@@ -29,28 +31,30 @@ public class GravarMensalista extends AsyncTask {
 
         CriarJsons jsonMensalista = new CriarJsons();
 
-        JSONStringer jsonStringerMensalista = jsonMensalista.criarJsonMensalista(mensalista);
+        JSONStringer stringerMensalista = jsonMensalista.criarJsonMensalista(mensalista);
 
         try {
-            URL url = new URL("http://10.107.134.8:8080/mensalista");
+            URL url = new URL("http://" + MainActivity.ipServidor + ":8080/mensalista");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestMethod("POST");
             conexao.setDoInput(true);
             PrintStream output = new PrintStream(conexao.getOutputStream());
-            output.print(jsonStringerMensalista);
+            output.print(stringerMensalista);
             conexao.connect();
             Scanner scanner = new Scanner(conexao.getInputStream());
             String resposta = scanner.nextLine();
 
             Log.d("Resposta", resposta);
 
+            dados = resposta;
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return dados;
     }
 }

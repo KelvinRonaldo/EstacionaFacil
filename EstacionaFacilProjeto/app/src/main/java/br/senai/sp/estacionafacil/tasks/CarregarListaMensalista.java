@@ -18,31 +18,28 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.senai.sp.estacionafacil.EstacionadosActivity;
 import br.senai.sp.estacionafacil.MainActivity;
-import br.senai.sp.estacionafacil.R;
-import br.senai.sp.estacionafacil.adapter.MovimentacaoListAdapter;
-import br.senai.sp.estacionafacil.modelo.Movimentacao;
+import br.senai.sp.estacionafacil.MensalistasActivity;
+import br.senai.sp.estacionafacil.modelo.Mensalista;
 
-public class CarregarListaMovimentos extends AsyncTask {
+public class CarregarListaMensalista extends AsyncTask {
 
     private String dados = "";
-    private List<Movimentacao> movimentos;
+    private List<Mensalista> mensalistas;
     private ProgressDialog progressDialog;
-    private ArrayAdapter<Movimentacao> adapter;
-    private EstacionadosActivity estacionadosActivity;
-//    private Context context;
+    private MensalistasActivity mensalistaActivity;
+    private ArrayAdapter<Mensalista> adapter;
 
-    public CarregarListaMovimentos(EstacionadosActivity estacionadosActivity) {
-        this.estacionadosActivity = estacionadosActivity;
-//        this.context = context;
+
+    public CarregarListaMensalista(MensalistasActivity mensalistaActivity) {
+        this.mensalistaActivity = mensalistaActivity;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
 
         try {
-            URL url = new URL("http://"+MainActivity.ipServidor+":8080/movimentacoes/estacionados");
+            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/mensalista");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             InputStream dadosStream = conexao.getInputStream();
             InputStreamReader leitorStream = new InputStreamReader(dadosStream);
@@ -55,22 +52,21 @@ public class CarregarListaMovimentos extends AsyncTask {
                 dados += registro;
             }
 
-            Movimentacao movimento;
-            movimentos = new ArrayList<>();
+            Mensalista mensalista;
+            mensalistas = new ArrayList<>();
 
             try {
                 JSONArray dadosArray = new JSONArray(dados);
 
                 for(int cont = 0; cont < dadosArray.length(); cont++){
-                    JSONObject jsonMovimentos = (JSONObject) dadosArray.get(cont);
+                    JSONObject jsonMensalista = (JSONObject) dadosArray.get(cont);
 
-                    movimento = new Movimentacao();
-                    movimento.setCodMovimento(jsonMovimentos.getInt("codMovimento"));
-                    movimento.setPlaca(jsonMovimentos.getString("placa"));
-                    movimento.setModeloCarro(jsonMovimentos.getString("modeloCarro"));
-                    movimento.setDataHoraEntrada(jsonMovimentos.getString("dataHoraEntrada"));
-                    movimento.setTipo(jsonMovimentos.getString("tipo"));
-                    movimentos.add(movimento);
+                    mensalista = new Mensalista();
+                    mensalista.setCodMensalista(jsonMensalista.getInt("codMensalista"));
+                    mensalista.setNome(jsonMensalista.getString("nome"));
+                    mensalista.setCpf(jsonMensalista.getString("cpf"));
+                    mensalista.setEmail(jsonMensalista.getString("email"));
+                    mensalistas.add(mensalista);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -86,7 +82,7 @@ public class CarregarListaMovimentos extends AsyncTask {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(estacionadosActivity);
+        progressDialog = new ProgressDialog(mensalistaActivity);
         progressDialog.setTitle("Em Processo...");
         progressDialog.setMessage("Seu dados estão sendo carregados. Espere um minuto.");
         progressDialog.show();
@@ -97,9 +93,12 @@ public class CarregarListaMovimentos extends AsyncTask {
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
-        MovimentacaoListAdapter movimentacaoListAdapter = new MovimentacaoListAdapter(estacionadosActivity, movimentos);
-        EstacionadosActivity.listaEstacionamento.setAdapter(movimentacaoListAdapter);
-        progressDialog.dismiss();
+        adapter = new ArrayAdapter<>(mensalistaActivity, android.R.layout.simple_list_item_1, mensalistas);
 
+        MensalistasActivity.visualizarMensalista.setAdapter(adapter);
+
+        progressDialog.dismiss();
     }
+
+
 }

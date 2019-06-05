@@ -10,18 +10,24 @@ import java.security.acl.LastOwnerException;
 import br.senai.sp.estacionafacil.modelo.Endereco;
 import br.senai.sp.estacionafacil.modelo.Mensalista;
 import br.senai.sp.estacionafacil.modelo.Movimentacao;
+import br.senai.sp.estacionafacil.modelo.Preco;
 import br.senai.sp.estacionafacil.modelo.Telefone;
 
 public class CriarJsons {
 
-    public JSONStringer criarJsonMovimento(Movimentacao movimento){
+
+    public JSONStringer criarJsonSaidaMovimento(Movimentacao movimento, String modo){
         JSONStringer jsonMovimento = new JSONStringer();
 
         try {
             jsonMovimento.object();
+            if(modo.equals("atualizar")){
+                jsonMovimento.key("codMovimento").value(movimento.getCodMovimento());
+            }
             jsonMovimento.key("placa").value(movimento.getPlaca());
             jsonMovimento.key("modeloCarro").value(movimento.getModeloCarro());
-            jsonMovimento.key("tipo").value("A");
+            jsonMovimento.key("dataHoraEntrada").value(movimento.getDataHoraEntrada());
+            jsonMovimento.key("tipo").value(movimento.getTipo());
             jsonMovimento.key("tempoPermanencia").value(0);
             jsonMovimento.key("valorPago").value(0);
             jsonMovimento.endObject();
@@ -31,6 +37,28 @@ public class CriarJsons {
 
         return jsonMovimento;
     }
+
+    public JSONStringer criarJsonSaidaMovimento(Movimentacao movimento){
+        JSONStringer jsonMovimento = new JSONStringer();
+
+        try {
+            jsonMovimento.object();
+            jsonMovimento.key("codMovimento").value(movimento.getCodMovimento());
+            jsonMovimento.key("placa").value(movimento.getPlaca());
+            jsonMovimento.key("modeloCarro").value(movimento.getModeloCarro());
+            jsonMovimento.key("dataHoraEntrada").value(movimento.getDataHoraEntrada());
+            jsonMovimento.key("dataHoraSaida").value(movimento.getDataHoraSaida());
+            jsonMovimento.key("tempoPermanencia").value(movimento.getTempoPermanecia());
+            jsonMovimento.key("valorPago").value(movimento.getValorPago());
+            jsonMovimento.key("tipo").value(movimento.getTipo());
+            jsonMovimento.endObject();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonMovimento;
+    }
+
+
 
     public JSONStringer criarJsonMensalista(Mensalista mensalista){
         JSONStringer jsonMensalista = new JSONStringer();
@@ -42,12 +70,27 @@ public class CriarJsons {
             jsonMensalista.key("cpf").value(mensalista.getCpf().toString());
             jsonMensalista.endObject();
 
-            Log.d("MENSALISTA", jsonMensalista.toString());
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonMensalista;
+    }
+
+
+    public JSONStringer criarJsonPrecos(Preco preco){
+        JSONStringer jsonPreco = new JSONStringer();
+
+        try {
+            jsonPreco.object();
+            jsonPreco.key("valorPrimeiraHora").value(preco.getValorPrimeiraHora());
+            jsonPreco.key("valorDemaisHoras").value(preco.getValorDemaisHoras());
+            jsonPreco.key("valorMensal").value(preco.getValorMensal());
+            jsonPreco.key("tempoTolerancia").value(preco.getTempoTolerancia());
+            jsonPreco.endObject();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonPreco;
     }
 
     public JSONStringer criarJsonEndereco(Endereco endereco){
@@ -65,6 +108,20 @@ public class CriarJsons {
             e.printStackTrace();
         }
         return jsonEndereco;
+    }
+
+    public JSONStringer criarJsonMensalistaEndereco(int codMensalita, int codEndereco){
+        JSONStringer jsonMensalistEndereco = new JSONStringer();
+
+        try {
+            jsonMensalistEndereco.object();
+            jsonMensalistEndereco.key("codMensalista").value(codMensalita);
+            jsonMensalistEndereco.key("codEndereco").value(codEndereco);
+            jsonMensalistEndereco.endObject();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonMensalistEndereco;
     }
 
     public JSONStringer criarJsonMensalistaTelefone(int codMensalita, int codTelefone){
@@ -92,20 +149,6 @@ public class CriarJsons {
             e.printStackTrace();
         }
         return jsonTelefone;
-    }
-
-    public JSONStringer criarJsonMensalistaEndereco(int codMensalita, int codEndereco){
-        JSONStringer jsonMensalistEndereco = new JSONStringer();
-
-        try {
-            jsonMensalistEndereco.object();
-            jsonMensalistEndereco.key("codMensalista").value(codMensalita);
-            jsonMensalistEndereco.key("codEndereco").value(codEndereco);
-            jsonMensalistEndereco.endObject();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonMensalistEndereco;
     }
 
 }

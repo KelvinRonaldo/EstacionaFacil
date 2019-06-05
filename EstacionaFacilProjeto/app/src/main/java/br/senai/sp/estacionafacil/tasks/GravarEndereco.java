@@ -13,46 +13,47 @@ import java.net.URL;
 import java.util.Scanner;
 
 import br.senai.sp.estacionafacil.MainActivity;
-import br.senai.sp.estacionafacil.modelo.Movimentacao;
+import br.senai.sp.estacionafacil.modelo.Endereco;
 import br.senai.sp.estacionafacil.utils.CriarJsons;
 
-public class GravarMovimento extends AsyncTask {
+public class GravarEndereco extends AsyncTask {
 
-    private Movimentacao movimento;
+    private Endereco endereco;
+    private String dados;
 
-    public GravarMovimento(Movimentacao movimento) {
-        this.movimento = movimento;
+    public GravarEndereco(Endereco endereco, String dados) {
+        this.endereco = endereco;
+        this.dados = dados;
     }
 
     @Override
     protected Object doInBackground(Object[] objects) {
+        CriarJsons jsonEndereco = new CriarJsons();
 
-        CriarJsons jsonMovimento = new CriarJsons();
-        JSONStringer stringerMovimento;
+        JSONStringer stringerEndereco = jsonEndereco.criarJsonEndereco(endereco);
+
         try {
-            stringerMovimento = jsonMovimento.criarJsonSaidaMovimento(movimento, "gravar");
-
-            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/movimentacoes");
+            URL url = new URL("http://" + MainActivity.ipServidor + ":8080/mensalista");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestMethod("POST");
             conexao.setDoInput(true);
             PrintStream output = new PrintStream(conexao.getOutputStream());
-            output.print(stringerMovimento);
+            output.print(stringerEndereco);
             conexao.connect();
             Scanner scanner = new Scanner(conexao.getInputStream());
             String resposta = scanner.nextLine();
 
-            Log.d("RESPOSTA", resposta);
+            Log.d("Resposta", resposta);
 
+            dados = resposta;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return null;
+        return dados;
     }
 }

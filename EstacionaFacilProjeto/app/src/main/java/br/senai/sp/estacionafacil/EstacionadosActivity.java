@@ -3,10 +3,11 @@ package br.senai.sp.estacionafacil;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import br.senai.sp.estacionafacil.tasks.CarregarListaMovimentos;
 
@@ -26,20 +27,11 @@ public class EstacionadosActivity extends AppCompatActivity {
         btnEnviarCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent abrirCadastro = new Intent(EstacionadosActivity.this, CadastroActivity.class);
+                Intent abrirCadastro = new Intent(EstacionadosActivity.this, CadastroMovimentoActivity.class);
                 startActivity(abrirCadastro);
             }
         });
 
-//        Fazerndo a saida no adapter
-//         listaEstacionamento.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Movimentacao movimento = (Movimentacao) listaEstacionamento.getItemAtPosition(position);
-//                SaidaMovimento saidaMovimento = new SaidaMovimento(movimento, EstacionadosActivity.this);
-//                saidaMovimento.execute();
-//            }
-//        });
     }
 
     @Override

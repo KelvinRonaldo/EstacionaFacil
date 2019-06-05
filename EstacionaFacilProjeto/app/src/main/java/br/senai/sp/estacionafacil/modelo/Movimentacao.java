@@ -79,6 +79,6 @@ public class Movimentacao implements Serializable {
 
     @Override
     public String toString() {
-        return codMovimento + " - " + placa + " - " + modeloCarro;
+        return codMovimento + " - " + placa + " - " + modeloCarro + " - " + dataHoraEntrada;
     }
 }

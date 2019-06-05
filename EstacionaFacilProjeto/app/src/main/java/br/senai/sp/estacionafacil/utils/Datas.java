@@ -21,9 +21,20 @@ public class Datas {
             SimpleDateFormat stringToDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
             stringData = stringToDate.parse(data);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
         return stringData;
+    }
+
+
+    public String formatarComSubString(String data) {
+
+        String ano = data.substring(0,4);
+        String dia = data.substring(8,10);
+        String mes = data.substring(5,7);
+        String hora = data.substring(11,16);
+
+        return dia + "/"+ mes +"/" + ano + " " + hora;
     }
 }
