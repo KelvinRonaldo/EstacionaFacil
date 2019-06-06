@@ -7,13 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.util.concurrent.ExecutionException;
 
 import br.senai.sp.estacionafacil.modelo.Endereco;
 import br.senai.sp.estacionafacil.modelo.Mensalista;
 import br.senai.sp.estacionafacil.modelo.Telefone;
+import br.senai.sp.estacionafacil.tasks.GravarEndereco;
 import br.senai.sp.estacionafacil.tasks.GravarMensalista;
+import br.senai.sp.estacionafacil.tasks.GravarMensalistaEndereco;
+import br.senai.sp.estacionafacil.tasks.GravarMensalistaTelefone;
+import br.senai.sp.estacionafacil.tasks.GravarTelefone;
 
 public class CadastroMensalistaActivity extends AppCompatActivity {
 
@@ -73,38 +82,43 @@ public class CadastroMensalistaActivity extends AppCompatActivity {
                 mensalista.setNome(txtNomeMensalista.getText().toString());
                 mensalista.setEmail(txtEmailMensalista.getText().toString());
                 mensalista.setCpf(txtCpfMensalista.getText().toString());
+                telefone.setTelefone(txtTelefoneMensalista.getText().toString());
+                endereco.setLogradouro(txtLogradouroMensalista.getText().toString());
+                endereco.setNumero(txtNumeroMensalista.getText().toString());
+                endereco.setBairro(txtBairroMensalista.getText().toString());
+                endereco.setCep(txtCepMensalista.getText().toString());
+                endereco.setCidade(txtCidadeMensalista.getText().toString());
+                endereco.setEstado(txtEstadoMensalista.getText().toString());
 
+                try {
+                    if (mensalista.getCodMensalista() == 0) {
+                        GravarMensalista gravarMensalista = new GravarMensalista(mensalista);
+                        gravarMensalista.execute();
+                        mensalista = (Mensalista) gravarMensalista.get();
 
-                    try {
-                        if(mensalista.getCodMensalista() == 0){
-                            GravarMensalista gravarMensalista = new GravarMensalista(mensalista);
-                            gravarMensalista.execute();
+                        GravarEndereco gravarEndereco = new GravarEndereco(endereco);
+                        gravarEndereco.execute();
+                        endereco = (Endereco) gravarEndereco.get();
 
-                            mensalista = (Mensalista) gravarMensalista.get();
+                        GravarTelefone gravarTelefone = new GravarTelefone(telefone);
+                        gravarTelefone.execute();
+                        telefone = (Telefone) gravarTelefone.get();
 
+                        GravarMensalistaEndereco gravarMensalistaEndereco = new GravarMensalistaEndereco(mensalista, endereco);
+                        gravarMensalistaEndereco.execute();
 
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        GravarMensalistaTelefone gravarMensalistaTelefone = new GravarMensalistaTelefone(mensalista, telefone);
+                        gravarMensalistaTelefone.execute();
+
+                        Intent abrirMensalistas = new Intent(CadastroMensalistaActivity.this, MensalistasActivity.class);
+                        startActivity(abrirMensalistas);
                     }
-
-
-                    Intent abrirMensalistas = new Intent(CadastroMensalistaActivity.this, MensalistasActivity.class);
-                    startActivity(abrirMensalistas);
-
-//                telefone.setTelefone(txtTelefoneMensalista.getText().toString());
-//
-//                endereco.setLogradouro(txtLogradouroMensalista.getText().toString());
-//                endereco.setNumero(txtNumeroMensalista.getText().toString());
-//                endereco.setBairro(txtBairroMensalista.getText().toString());
-//                endereco.setCep(txtCepMensalista.getText().toString());
-//                endereco.setCidade(txtCidadeMensalista.getText().toString());
-//                endereco.setEstado(txtEstadoMensalista.getText().toString());
-
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
-
     }
 }

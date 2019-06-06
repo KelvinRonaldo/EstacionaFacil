@@ -4,12 +4,21 @@ import java.io.Serializable;
 
 public class Endereco implements Serializable {
 
+    private Integer codEndereco;
     private String logradouro;
     private String numero;
     private String bairro;
     private String cep;
     private String cidade;
     private String estado;
+
+    public Integer getCodEndereco() {
+        return codEndereco;
+    }
+
+    public void setCodEndereco(Integer codEndereco) {
+        this.codEndereco = codEndereco;
+    }
 
     public String getLogradouro() {
         return logradouro;

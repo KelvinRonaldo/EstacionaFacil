@@ -3,6 +3,8 @@ package br.senai.sp.estacionafacil.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.io.IOException;
@@ -21,9 +23,8 @@ public class GravarEndereco extends AsyncTask {
     private Endereco endereco;
     private String dados;
 
-    public GravarEndereco(Endereco endereco, String dados) {
+    public GravarEndereco(Endereco endereco) {
         this.endereco = endereco;
-        this.dados = dados;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class GravarEndereco extends AsyncTask {
         JSONStringer stringerEndereco = jsonEndereco.criarJsonEndereco(endereco);
 
         try {
-            URL url = new URL("http://" + MainActivity.ipServidor + ":8080/mensalista");
+            URL url = new URL("http://" + MainActivity.ipServidor + ":8080/enderecos");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
@@ -46,14 +47,18 @@ public class GravarEndereco extends AsyncTask {
             String resposta = scanner.nextLine();
 
             Log.d("Resposta", resposta);
+            JSONObject retornoEndereco = new JSONObject(resposta);
+            endereco = new Endereco();
+            endereco.setCodEndereco(retornoEndereco.getInt("codEndereco"));
 
-            dados = resposta;
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return dados;
+        return endereco;
     }
 }

@@ -3,8 +3,6 @@ package br.senai.sp.estacionafacil.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.io.IOException;
@@ -16,53 +14,45 @@ import java.util.Scanner;
 
 import br.senai.sp.estacionafacil.MainActivity;
 import br.senai.sp.estacionafacil.modelo.Mensalista;
+import br.senai.sp.estacionafacil.modelo.Telefone;
 import br.senai.sp.estacionafacil.utils.CriarJsons;
 
-public class GravarMensalista extends AsyncTask {
+public class GravarMensalistaTelefone extends AsyncTask {
 
     private Mensalista mensalista;
-    public String dados;
+    private Telefone telefone;
 
-    public GravarMensalista(Mensalista mensalista) {
+    public GravarMensalistaTelefone(Mensalista mensalista, Telefone telefone) {
         this.mensalista = mensalista;
+        this.telefone = telefone;
     }
-
 
     @Override
     protected Object doInBackground(Object[] objects) {
+        CriarJsons jsonMensalistaTelefone = new CriarJsons();
 
-        CriarJsons jsonMensalista = new CriarJsons();
-
-        JSONStringer stringerMensalista = jsonMensalista.criarJsonMensalista(mensalista);
+        JSONStringer stringerMensalistaTelefone = jsonMensalistaTelefone.criarJsonMensalistaTelefone(mensalista, telefone);
 
         try {
-            URL url = new URL("http://" + MainActivity.ipServidor + ":8080/mensalistas");
+            URL url = new URL("http://"+MainActivity.ipServidor+":8080/mensalistas/telefones");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             conexao.setRequestProperty("Content-type", "application/json");
             conexao.setRequestProperty("Accept", "application/json");
             conexao.setRequestMethod("POST");
             conexao.setDoInput(true);
             PrintStream output = new PrintStream(conexao.getOutputStream());
-            output.print(stringerMensalista);
+            output.print(stringerMensalistaTelefone);
             conexao.connect();
             Scanner scanner = new Scanner(conexao.getInputStream());
             String resposta = scanner.nextLine();
 
             Log.d("Resposta", resposta);
 
-            JSONObject retornoMensalista = new JSONObject(resposta);
-
-            mensalista = new Mensalista();
-            mensalista.setCodMensalista(retornoMensalista.getInt("codMensalista"));
-
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-        return mensalista;
+        return null;
     }
 }
