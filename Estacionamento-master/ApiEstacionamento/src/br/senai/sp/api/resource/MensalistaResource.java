@@ -23,7 +23,7 @@ import br.senai.sp.api.model.Mensalista;
 import br.senai.sp.api.repository.MensalistaRepository;
 
 @RestController
-@RequestMapping("/mensalista")
+@RequestMapping("/mensalistas")
 public class MensalistaResource {
 	@Autowired
 	private MensalistaRepository mensalistaRepository;

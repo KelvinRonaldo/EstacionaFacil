@@ -20,7 +20,7 @@ import br.senai.sp.api.model.Fabricante;
 import br.senai.sp.api.repository.FabricanteRepository;
 
 @RestController
-@RequestMapping("/fabricante")
+@RequestMapping("/fabricantes")
 public class FabricanteResource {
 		
 	@Autowired

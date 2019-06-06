@@ -21,7 +21,7 @@ import br.senai.sp.api.model.MensalistaTelefone;
 import br.senai.sp.api.repository.MensalistaTelefoneRepository;
 
 @RestController
-@RequestMapping("/mensalista/telefone")
+@RequestMapping("/mensalistas/telefones")
 public class MensalistaTelefoneResource {
 	
 	@Autowired

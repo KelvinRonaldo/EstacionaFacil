@@ -20,7 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.senai.sp.api.model.Endereco;
 import br.senai.sp.api.repository.EnderecoRepository;
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/enderecos")
 public class EnderecoResource {
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class EnderecoResource {
 	
 	//pegando um endereco
 	@GetMapping("/{id}")
-	private Endereco  visualizarFabricante(@PathVariable Long id) {
+	private Endereco  visualizarEabricante(@PathVariable Long id) {
 		return enderecoRepository.findById(id).get();
 	}
 	

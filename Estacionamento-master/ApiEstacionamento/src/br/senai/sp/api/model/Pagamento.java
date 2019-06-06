@@ -17,7 +17,7 @@ public class Pagamento {
 	private String dataPago;
 	private Double valorPago;
 	@ManyToOne
-	@JoinColumn(name = "cod_pagamento")
+	@JoinColumn(name = "cod_contrato")
 	private Contrato codContrato;
 
 	public Long getCodPagamento() {

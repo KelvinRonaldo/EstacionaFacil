@@ -15,7 +15,7 @@ public class Contrato {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codContrato;
-	private Integer quanticadadeVagas;
+	private Integer quantidadeVagas;
 	private Double valorMensalista;
 	private Integer diaPagar;
 	@ManyToOne
@@ -31,12 +31,14 @@ public class Contrato {
 		this.codContrato = codContrato;
 	}
 
-	public Integer getQuanticadadeVagas() {
-		return quanticadadeVagas;
+	
+
+	public Integer getQuantidadeVagas() {
+		return quantidadeVagas;
 	}
 
-	public void setQuanticadadeVagas(Integer quanticadadeVagas) {
-		this.quanticadadeVagas = quanticadadeVagas;
+	public void setQuantidadeVagas(Integer quantidadeVagas) {
+		this.quantidadeVagas = quantidadeVagas;
 	}
 
 	public Double getValorMensalista() {

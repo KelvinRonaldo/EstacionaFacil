@@ -25,7 +25,7 @@ import br.senai.sp.api.model.Veiculo;
 import br.senai.sp.api.repository.VeiculoRepository;
 
 @RestController
-@RequestMapping("/veiculo")
+@RequestMapping("/veiculos")
 public class VeiculoResource {
 	
 	@Autowired
