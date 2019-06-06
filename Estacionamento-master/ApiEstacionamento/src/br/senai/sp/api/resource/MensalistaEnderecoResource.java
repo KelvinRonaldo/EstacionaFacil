@@ -21,7 +21,7 @@ import br.senai.sp.api.model.MensalistaEndereco;
 import br.senai.sp.api.repository.MensalistaEnderecoRepository;
 
 @RestController
-@RequestMapping("/mensalista/endereco")
+@RequestMapping("/mensalistas/enderecos")
 public class MensalistaEnderecoResource {
 	
 	@Autowired

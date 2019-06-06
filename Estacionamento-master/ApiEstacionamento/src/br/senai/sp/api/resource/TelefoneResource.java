@@ -21,7 +21,7 @@ import br.senai.sp.api.model.Telefone;
 import br.senai.sp.api.repository.TelefoneRepository;
 
 @RestController
-@RequestMapping("/telefone")
+@RequestMapping("/telefones")
 public class TelefoneResource {
 	@Autowired
 	private TelefoneRepository telefoneRepository;
