@@ -39,7 +39,7 @@ public class CarregarListaMensalista extends AsyncTask {
     protected Object doInBackground(Object[] objects) {
 
         try {
-            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/mensalista");
+            URL url = new URL("http://"+ MainActivity.ipServidor+":8080/mensalistas");
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
             InputStream dadosStream = conexao.getInputStream();
             InputStreamReader leitorStream = new InputStreamReader(dadosStream);

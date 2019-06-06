@@ -100,6 +100,7 @@ public class CriarJsons {
             jsonEndereco.object();
             jsonEndereco.key("logradouro").value(endereco.getLogradouro());
             jsonEndereco.key("numero").value(endereco.getNumero());
+            jsonEndereco.key("bairro").value(endereco.getBairro());
             jsonEndereco.key("cep").value(endereco.getCep());
             jsonEndereco.key("cidade").value(endereco.getCidade());
             jsonEndereco.key("estado").value(endereco.getEstado());
@@ -110,32 +111,22 @@ public class CriarJsons {
         return jsonEndereco;
     }
 
-    public JSONStringer criarJsonMensalistaEndereco(int codMensalita, int codEndereco){
+    public JSONStringer criarJsonMensalistaEndereco(Mensalista mensalista, Endereco endereco){
         JSONStringer jsonMensalistEndereco = new JSONStringer();
 
         try {
             jsonMensalistEndereco.object();
-            jsonMensalistEndereco.key("codMensalista").value(codMensalita);
-            jsonMensalistEndereco.key("codEndereco").value(codEndereco);
+                jsonMensalistEndereco.key("mensalista").object()
+                    .key("codMensalista").value(mensalista.getCodMensalista())
+                .endObject();
+            jsonMensalistEndereco.key("endereco").object()
+                    .key("codEndereco").value(endereco.getCodEndereco())
+                .endObject();
             jsonMensalistEndereco.endObject();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonMensalistEndereco;
-    }
-
-    public JSONStringer criarJsonMensalistaTelefone(int codMensalita, int codTelefone){
-        JSONStringer jsonMensalistaTelefone = new JSONStringer();
-
-        try {
-            jsonMensalistaTelefone.object();
-            jsonMensalistaTelefone.key("codMensalista").value(codMensalita);
-            jsonMensalistaTelefone.key("codTelefone").value(codTelefone);
-            jsonMensalistaTelefone.endObject();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonMensalistaTelefone;
     }
 
     public JSONStringer criarJsonTelefone(Telefone telefone){
@@ -151,4 +142,21 @@ public class CriarJsons {
         return jsonTelefone;
     }
 
+    public JSONStringer criarJsonMensalistaTelefone(Mensalista mensalista, Telefone telefone){
+        JSONStringer jsonMensalistaTelefone = new JSONStringer();
+
+        try {
+            jsonMensalistaTelefone.object();
+                jsonMensalistaTelefone.key("mensalista").object()
+                    .key("codMensalista").value(mensalista.getCodMensalista())
+                .endObject();
+                jsonMensalistaTelefone.key("telefone").object()
+                    .key("codTelefone").value(telefone.getCodTelefone())
+                .endObject();
+            jsonMensalistaTelefone.endObject();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonMensalistaTelefone;
+    }
 }
